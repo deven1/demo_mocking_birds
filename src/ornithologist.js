@@ -1,16 +1,13 @@
-let patterns = {
-  sparrow: [1, 1, 2, 1],
-  eagle: [3, 4, 5, 6, 9],
-  pigeon: [1, 1, 5, 6]
-};
-
-const Ornithologist = {
-  listen: (bird, cb) => {
+class Ornithologist {
+  constructor(patterns) {
+    this.patterns = patterns;
+  }
+  listen(bird, cb) {
     let pattern = [];
 
     bird.on("chirp", sound => {
       pattern.push(sound);
-      let birdName = Ornithologist.analyze(pattern);
+      let birdName = this.analyze(pattern);
 
       if (birdName) {
         cb(null, birdName);
@@ -24,16 +21,16 @@ const Ornithologist = {
         }
       }
     });
-  },
-  analyze: pattern => {
-    for (var bird in patterns) {
-      if (arraysMatch(pattern, patterns[bird])) {
+  }
+  analyze(pattern) {
+    for (var bird in this.patterns) {
+      if (arraysMatch(pattern, this.patterns[bird])) {
         return bird;
       }
     }
     return false;
   }
-};
+}
 
 const arraysMatch = (arr1, arr2) => {
   if (arr1.length !== arr2.length) return false;

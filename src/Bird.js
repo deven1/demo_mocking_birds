@@ -6,6 +6,7 @@ class Bird extends EventEmitter {
     this.name = name;
     this.pattern = pattern;
     this.index = 0;
+    this.sing();
   }
   chirp() {
     let note = this.pattern[this.index];
