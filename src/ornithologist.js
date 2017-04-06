@@ -1,27 +1,23 @@
 const BirdBrain = require("./BirdBrain");
+const BirdJournal = require("./BirdJournal");
+const ListeningSession = require("./ListeningSession");
 
 class Ornithologist {
-  constructor() {
-    this.patterns = BirdBrain.getPatterns();
+  constructor({ brain = BirdBrain, journal = BirdJournal } = {}) {
+    this.patterns = brain.getPatterns();
+    this.journal = journal;
   }
   listen(bird, cb) {
-    let pattern = [];
+    let session = new ListeningSession(this.analyze.bind(this), bird);
 
-    bird.on("chirp", sound => {
-      pattern.push(sound);
-      let birdName = this.analyze(pattern);
+    session.on("identification", birdName => {
+      this.journal.logIdentification(birdName);
+      cb(null, birdName);
+    });
 
-      if (birdName) {
-        cb(null, birdName);
-        this.pattern = [];
-        bird.removeAllListeners("chirp");
-      } else {
-        if (pattern.length > 10) {
-          cb(new Error("I do not recognize this bird. I am a failure."));
-          this.pattern = [];
-          bird.removeAllListeners("chirp");
-        }
-      }
+    session.on("error", error => {
+      this.journal.logFailure();
+      cb(error);
     });
   }
   analyze(pattern) {
