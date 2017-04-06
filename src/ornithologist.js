@@ -1,6 +1,8 @@
+const BirdBrain = require("./BirdBrain");
+
 class Ornithologist {
-  constructor(patterns) {
-    this.patterns = patterns;
+  constructor() {
+    this.patterns = BirdBrain.getPatterns();
   }
   listen(bird, cb) {
     let pattern = [];

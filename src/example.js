@@ -3,15 +3,12 @@ const Ornithologist = require("./Ornithologist");
 const Bird = require("./Bird");
 
 // construct Bird objects with names and patterns
-let sparrow = new Bird("sparrow", [1, 1, 2, 1]);
-let eagle = new Bird("eagle", [3, 4, 5, 6, 9]);
-let dog = new Bird("sparrow", [6, 6, 6]);
+let sparrow = new Bird("sparrow", [1, 1, 2, 1], true);
+let eagle = new Bird("eagle", [3, 4, 5, 6, 9], true);
+let dog = new Bird("sparrow", [6, 6, 6], true);
 
 // construct Ornithologist object with list of recognized patterns
-const orn = new Ornithologist({
-  sparrow: [1, 1, 2, 1],
-  eagle: [3, 4, 5, 6, 9]
-});
+const orn = new Ornithologist();
 
 // attach listeners to Bird objects to console log notes
 sparrow.on("chirp", note => console.log("sparrow:", note));

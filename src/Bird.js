@@ -1,12 +1,12 @@
 const EventEmitter = require("events");
 
 class Bird extends EventEmitter {
-  constructor(name, pattern) {
+  constructor(name, pattern, startSinging) {
     super();
     this.name = name;
     this.pattern = pattern;
     this.index = 0;
-    this.sing();
+    if (startSinging) this.sing();
   }
   chirp() {
     let note = this.pattern[this.index];
@@ -24,7 +24,7 @@ class Bird extends EventEmitter {
         this.chirp();
         this.sing();
       },
-      300
+      100
     );
   }
 }
